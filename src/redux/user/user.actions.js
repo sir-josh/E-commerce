@@ -1,4 +1,4 @@
 export const setCurrentUser = user => ({
-    action: 'SET_CURRENT_USER',
+    type: 'SET_CURRENT_USER',
     payload: user
 });
