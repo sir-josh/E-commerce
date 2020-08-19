@@ -56,7 +56,7 @@ class App extends Component {
       // } else{
       //   this.setState({ currentUser: userAuthfromFirebase });
       // }
-      addCollectionsAndItems('collections', collectionsArray);
+      addCollectionsAndItems('collections', collectionsArray.map(({ title, items })  => ({ title, items })));
 
     });
   }
