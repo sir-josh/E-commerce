@@ -2,14 +2,26 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import SpinnerLoader from '../../components/spinner-loader/spinner-loader.component';
+
 import CollectionOverview from '../../components/collections-overview/collections-overview.component';
 import CollectionPage from '../../pages/collection/collection.component';
 
-import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
-
 import { updateCollections } from "../../redux/shop/shop.actions";
 
+import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
+
+const CollectionOverviewWithSpinnerLoader = SpinnerLoader(CollectionOverview);
+const CollectionPageWithSpinnerLoader = SpinnerLoader(CollectionPage);
+
 class ShopPage extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            isLoading: true
+        }
+    }
     unSubcribeFromSnapshot = null;
 
     componentDidMount(){
@@ -20,15 +32,17 @@ class ShopPage extends Component {
         this.unSubcribeFromSnapshot = collectionRef.onSnapshot( async snapshot => {
            const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
            updateCollections(collectionsMap);
+           this.setState({ isLoading: false });
         });
     }
 
     render(){
         const { match } = this.props;
+        const { isLoading } = this.state;
         return (
             <div className="shop-page">
-                <Route exact path={`${match.path}`} component={CollectionOverview} />
-                <Route path={`${match.path}/:collectionId`} component={CollectionPage}/>
+                <Route exact path={`${match.path}`} render={(props) => <CollectionOverviewWithSpinnerLoader isLoading={isLoading} {...props} /> } />
+                <Route path={`${match.path}/:collectionId`} render={(props) => <CollectionPageWithSpinnerLoader isLoading={isLoading} {...props} /> } />
             </div>
         );
     }
