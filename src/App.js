@@ -11,7 +11,7 @@ import Header from './components/header/header.component';
 import SignInAndSignUp from './pages/signin-and-signup/signin-and-signup.component';
 import CheckoutPage from "./pages/checkout/checkout.component";
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+// import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from "./redux/user/user.selectors";
@@ -30,32 +30,32 @@ class App extends Component {
   componentDidMount(){
     const { setCurrentUser } = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuthfromFirebase => {
-      // this.setState({ currentUser: userAuthfromFirebase });
-      if(userAuthfromFirebase){
-        const userRef = await createUserProfileDocument(userAuthfromFirebase);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuthfromFirebase => {
+    //   // this.setState({ currentUser: userAuthfromFirebase });
+    //   if(userAuthfromFirebase){
+    //     const userRef = await createUserProfileDocument(userAuthfromFirebase);
 
-        userRef.onSnapshot(snapShot => {
-          // this.setState({
-          //   currentUser: {
-          //     id: snapShot.id,
-          //     ...snapShot.data()
-          //   }
-          // });
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-      }
-      // this.setState({ currentUser: userAuthfromFirebase });
-      setCurrentUser(userAuthfromFirebase);
+    //     userRef.onSnapshot(snapShot => {
+    //       // this.setState({
+    //       //   currentUser: {
+    //       //     id: snapShot.id,
+    //       //     ...snapShot.data()
+    //       //   }
+    //       // });
+    //       setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data()
+    //       });
+    //     });
+    //   }
+    //   // this.setState({ currentUser: userAuthfromFirebase });
+    //   setCurrentUser(userAuthfromFirebase);
 
-      // } else{
-      //   this.setState({ currentUser: userAuthfromFirebase });
-      // }
+    //   // } else{
+    //   //   this.setState({ currentUser: userAuthfromFirebase });
+    //   // }
 
-    });
+    // });
   }
 
   componentWillUnmount(){
