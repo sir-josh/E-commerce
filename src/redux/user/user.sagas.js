@@ -2,11 +2,18 @@ import { takeLatest, put, all, call } from "redux-saga/effects";
 
 import { UserActionTypes } from "./user.types";
 import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from "../../firebase/firebase.utils";
-import { signInSuccess, signInFailure, signOutSuccess, signOutFailure } from "./user.actions";
+import { 
+    signInSuccess, 
+    signInFailure, 
+    signOutSuccess, 
+    signOutFailure,
+    signUpSuccess,
+    signUpFailure
+} from "./user.actions";
 
-export function* getSnapshotFromUserAuth(UserAuth){
+export function* getSnapshotFromUserAuth(UserAuth, additionalData){
     try{
-        const userRef = yield call(createUserProfileDocument, UserAuth);
+        const userRef = yield call(createUserProfileDocument, UserAuth, additionalData);
         const userSnapshot = yield userRef.get();
         yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }))
     } catch (error) {
@@ -53,6 +60,20 @@ export function* signOutUser(){
     }
 }
 
+export function* signUp(userCredentials){
+    const { payload: { email, password, displayName }} = userCredentials;
+    try {
+        const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+        yield put(signUpSuccess({ userAuth: user, additionalData: {displayName}}))
+    } catch (error) {
+        yield put(signUpFailure(error))
+    }
+}
+
+export function* signInUserAfterSignUp({ payload: { userAuth, additionalData }}){
+    yield getSnapshotFromUserAuth(userAuth, additionalData);
+}
+
 export function* onGoogleSignInStart(){
     yield takeLatest(UserActionTypes.GOOGLE_SIGN_IN_START, signInWithGoogle);
 }
@@ -69,6 +90,21 @@ export function* onUserSignOutStart(){
     yield takeLatest(UserActionTypes.SIGN_OUT_START, signOutUser);
 }
 
+export function* onUserSignUpStart(){
+    yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
+}
+
+export function* onSignUpSuccess(){
+    yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInUserAfterSignUp);
+}
+
 export function* userSagas(){
-    yield all([call(onGoogleSignInStart), call(onEmailSignInStart), call(onCheckUserSession), call(onUserSignOutStart)]);
+    yield all([
+        call(onGoogleSignInStart), 
+        call(onEmailSignInStart), 
+        call(onCheckUserSession), 
+        call(onUserSignOutStart),
+        call(onUserSignUpStart),
+        call(onSignUpSuccess)
+    ]);
 }
