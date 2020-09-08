@@ -42,3 +42,55 @@
     }
   }
    
+
+@media screen and (max-width: 800px) {
+  .checkout-page {
+    width: 90%;
+  
+  
+    .checkout-header {
+      width: 100%;
+  
+      .header-block {
+        width: 22%;
+  
+        &:last-child {
+          width: 12%;
+        }
+        
+      }
+    }
+  
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .checkout-page {
+    width: unset;
+    margin: 35px 10px 0;
+
+    .checkout-header {
+      width: 90%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+     
+  
+      .header-block {
+        text-transform: capitalize;
+        width: unset;  
+      }
+    }
+  
+    .total {
+      font-size: 24px;
+    }
+
+
+    .test-warning {
+      font-size: 15px;
+      font-weight: bold;
+      margin: 40px 10px;
+    }
+  }
+}

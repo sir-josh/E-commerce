@@ -7,3 +7,19 @@
         margin-bottom: 10px;
     }
 }
+
+
+@media screen and (max-width: 800px){
+    .sign-up{
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 370px){
+    .sign-up{
+        button{
+           width: 100%;
+        }
+    }
+}

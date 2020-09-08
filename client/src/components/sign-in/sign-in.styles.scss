@@ -12,3 +12,29 @@
         justify-content: space-between;
     }
 }
+
+@media screen and (max-width: 800px){
+    .sign-in{
+        width: 100%;
+        margin-bottom: 80px;
+
+        .buttons > button{
+            min-width: unset;
+        }
+    }
+}
+
+@media screen and (max-width: 370px){
+    .sign-in{
+        width: 100%;
+        margin-bottom: 80px;
+
+        .buttons {
+           flex-direction: column;
+
+           & > button:first-child{
+               margin-bottom: 12px;
+           }
+        }
+    }
+}

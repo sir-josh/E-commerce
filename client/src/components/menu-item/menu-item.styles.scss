@@ -66,3 +66,48 @@
       }
     }
   }
+
+
+  @media screen and (max-width: 670px){
+    .menu-item {
+      height: 200px;
+        
+      &.large{
+        height: 200px;
+      }
+  
+    }
+  
+  }
+
+
+  @media screen and (max-width: 360px){
+    .menu-item {  
+      height: 200px;
+
+      &.large:last-child{
+        .content{
+          padding: 0 40px;
+        }
+      }
+
+      .content {
+        height: 90px;
+        padding: 0 18px;
+  
+        .title {
+          font-weight: bold;
+          margin:0;
+          font-size: 20px;
+          color: #4a4a4a;
+        }
+    
+        .subtitle {
+          font-weight: 700;
+          font-size: 14px;
+        }
+      }
+  
+    }
+  
+  }

@@ -40,3 +40,42 @@
     }
   }
   
+
+@media screen and (max-width: 800px){
+  .checkout-item {
+    font-size: 18px;
+  
+    .name,
+    .quantity,
+    .price {
+      width: 22%;
+    }
+  }
+}
+
+@media screen and (max-width: 370px){
+  .checkout-item {
+    width: 90%;
+    padding: 12px 0;
+    font-size: 18px;
+  
+    .name,
+    .quantity,
+    .price {
+      width: 22%;
+    }
+
+    .quantity{
+      margin-right: 20px;
+    }
+
+    .name {
+      margin-right: 20px;
+      text-align: center;
+    }
+  
+    .remove-button {
+      padding-left: 8px;
+    }
+  }
+}
