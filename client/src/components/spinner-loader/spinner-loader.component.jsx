@@ -1,12 +1,10 @@
 import React from 'react';
 
-import './spinner-loader.styles.scss';
+import Spinner from '../spinner/spinner.component';
 
 const SpinnerLoader = WrappedComponent => ({isLoading, ...otherProps}) => {
     return isLoading ? (
-        <div className="spinner-container">
-            <div className="spinner"></div>
-        </div>
+        <Spinner />
     ):(
         <WrappedComponent {...otherProps} />
     );
